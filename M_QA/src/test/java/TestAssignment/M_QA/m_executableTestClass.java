@@ -25,38 +25,63 @@ public class m_executableTestClass
 	@BeforeTest
 	public void SetUp_Browser() throws InterruptedException
 	{
-		//Browser set up
-		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\src\\test\\java\\TestAssignment\\M_QA\\TestDataFolder\\chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(12,TimeUnit.SECONDS);
+		try
+		{
+			//Browser set up
+			System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\src\\test\\java\\TestAssignment\\M_QA\\TestDataFolder\\chromedriver.exe");
+			driver = new ChromeDriver();
+			driver.manage().window().maximize();
+			driver.manage().timeouts().implicitlyWait(12,TimeUnit.SECONDS);
+			
+			//http://blazedemo.com/
+			driver.get("http://blazedemo.com/");
+		}
+		catch(Exception eb)
+		{
+			System.out.println(eb.getStackTrace());
+			System.out.println(eb.getMessage());
+		}
 		
-		//http://blazedemo.com/
-		driver.get("http://blazedemo.com/");
 	}
 	
 	@Test
 	public void blazedemo_FlightBookings() throws InterruptedException
 	{
-		m_Blazedemo_Homepage mbh = PageFactory.initElements(driver, m_Blazedemo_Homepage.class);
-		mbh.m_SelectPorts();
-		
-		m_Blazedemo_SelectFlight mbs = PageFactory.initElements(driver, m_Blazedemo_SelectFlight.class);
-		mbs.m_Blazedemo_ChooseFlights();
-		
-		m_Blazedemo_FlightBookingDetails mbf = PageFactory.initElements(driver, m_Blazedemo_FlightBookingDetails.class);
-		mbf.m_Blazedemo_FlightTicketsDetails();
-		
-		m_Blazedemo_FlightConfirmationPage mbfc = PageFactory.initElements(driver, m_Blazedemo_FlightConfirmationPage.class);
-		mbfc.m_Blazedemo_FlightTicketConfirmation();
+		try 
+		{
+			m_Blazedemo_Homepage mbh = PageFactory.initElements(driver, m_Blazedemo_Homepage.class);
+			mbh.m_SelectPorts();
+			
+			m_Blazedemo_SelectFlight mbs = PageFactory.initElements(driver, m_Blazedemo_SelectFlight.class);
+			mbs.m_Blazedemo_ChooseFlights();
+			
+			m_Blazedemo_FlightBookingDetails mbf = PageFactory.initElements(driver, m_Blazedemo_FlightBookingDetails.class);
+			mbf.m_Blazedemo_FlightTicketsDetails();
+			
+			m_Blazedemo_FlightConfirmationPage mbfc = PageFactory.initElements(driver, m_Blazedemo_FlightConfirmationPage.class);
+			mbfc.m_Blazedemo_FlightTicketConfirmation();
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex.getStackTrace());
+			System.out.println(ex.getMessage());
+		}
 				
 	}
 	
 	@AfterTest
-	public void Close_Browser() throws InterruptedException
+	public void Close_Browser()
 	{
-		Thread.sleep(2000);
-		driver.quit();
+		try 
+		{
+			Thread.sleep(2000);
+			driver.quit();
+		} 
+		catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+			e.getMessage();
+		}
 	}
 	
 }
